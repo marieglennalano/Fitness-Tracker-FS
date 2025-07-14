@@ -10,7 +10,7 @@ export default function Home() {
       <Container className="py-5">
         <Row className="align-items-center">
           <Col md={6} className="text-center text-md-start mb-4 mb-md-0">
-            <h1 className="home-title">Track Your Fitness Journey 💪</h1>
+            <h1 className="home-title">Track Your Fitness Journey</h1>
             <p className="home-subtitle">
               Stay focused, log your workouts, and hit your goals with ease.
             </p>
