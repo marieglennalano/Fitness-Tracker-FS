@@ -1,0 +1,72 @@
+/* General background for the registration page */
+.register-bg {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Form styling */
+.register-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+.register-title {
+  font-size: 24px;
+  color: #FF69B4; /* Pink color */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+.register-label {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Input field styling */
+.register-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Button styling */
+.register-btn {
+  background-color: #FF69B4; /* Pink */
+  color: white;
+  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.register-btn:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* Responsive design for smaller devices */
+@media (max-width: 600px) {
+  .register-form {
+    padding: 20px;
+    max-width: 100%;
+  }
+  .register-title {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,92 @@
+/* General layout for the login form container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+  padding: 20px;
+}
+
+/* Style for the login form */
+.login-form {
+  background-color: white;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Login title styling */
+.login-title {
+  text-align: center;
+  font-size: 24px;
+  color: #FF69B4; /* Pink color */
+  margin-bottom: 20px;
+}
+
+/* Error message styling */
+.login-error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Style for the input groups (email and password fields) */
+.login-group {
+  margin-bottom: 20px;
+}
+
+.login-group label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Input field styling */
+.login-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Button styling */
+.login-btn {
+  background-color: #FF69B4; /* Pink color */
+  color: white;
+  font-size: 16px;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #e65b9d; /* Slightly darker pink on hover */
+}
+
+.login-btn:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* Responsive Design: Adjust layout for smaller screens */
+@media (max-width: 600px) {
+  .login-form {
+    padding: 20px;
+    width: 100%;
+  }
+  .login-title {
+    font-size: 20px;
+  }
+  .login-btn {
+    font-size: 14px;
+  }
+}
