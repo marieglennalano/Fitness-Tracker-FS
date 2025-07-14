@@ -164,7 +164,7 @@ export default function Workout() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="section-title">Your Workouts</h2>
         {token && (
-          <Button variant="primary" id="addWorkout" onClick={handleShow}>
+          <Button id="addWorkout" onClick={handleShow}>
             + Add Workout
           </Button>
         )}
@@ -181,54 +181,50 @@ export default function Workout() {
                     Duration: {workout.duration} minutes<br />
                     Status: {workout.status}
                   </Card.Text>
-
-                  {token && (
-                    <>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleEditWorkout(workout)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleDeleteWorkout(workout._id)}
-                      >
-                        Delete
-                      </Button>
-                    </>
-                  )}
-
-                  {workout.status !== 'completed' && token && (
+                  <div className="d-flex flex-wrap">
                     <Button
-                      variant="success"
+                      variant="outline-primary"
                       size="sm"
-                      onClick={() => handleUpdateWorkoutStatus(workout._id)}
+                      className="me-2 mb-2"
+                      onClick={() => handleEditWorkout(workout)}
                     >
-                      Complete
+                      Edit
                     </Button>
-                  )}
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      className="me-2 mb-2"
+                      onClick={() => handleDeleteWorkout(workout._id)}
+                    >
+                      Delete
+                    </Button>
+                    {workout.status !== 'completed' && token && (
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        className="mb-2"
+                        onClick={() => handleUpdateWorkoutStatus(workout._id)}
+                      >
+                        Complete
+                      </Button>
+                    )}
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
           ))
         ) : (
-          <p>No workouts found. Login to View Workouts!</p>
+          <p>No workouts found. Login to view workouts!</p>
         )}
       </Row>
 
-      {/* Add/Edit Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{editWorkout ? 'Edit Workout' : 'Add Workout'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={editWorkout ? handleEditSubmit : handleAddWorkout}>
-            <Form.Group className="mb-3" controlId="formWorkoutName">
+            <Form.Group className="mb-3">
               <Form.Label>Workout Name</Form.Label>
               <Form.Control
                 type="text"
@@ -238,7 +234,7 @@ export default function Workout() {
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formWorkoutDuration">
+            <Form.Group className="mb-3">
               <Form.Label>Duration (minutes)</Form.Label>
               <Form.Control
                 type="number"
@@ -248,7 +244,7 @@ export default function Workout() {
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formWorkoutStatus">
+            <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
               <Form.Select
                 name="status"
@@ -259,7 +255,7 @@ export default function Workout() {
                 <option value="completed">Completed</option>
               </Form.Select>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button id="addWorkout" type="submit">
               {editWorkout ? 'Update Workout' : 'Add Workout'}
             </Button>
           </Form>

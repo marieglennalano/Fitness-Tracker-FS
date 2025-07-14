@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar, Button } from 'react-bootstrap';
 import './AppNavbar.css';
 
 export default function AppNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // Check login state
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
 
-  // Handle Logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -21,25 +19,30 @@ export default function AppNavbar() {
   };
 
   return (
-    <Navbar expand="lg" bg="dark" variant="dark" sticky="top" className="app-navbar">
+    <Navbar expand="lg" className="app-navbar shadow-sm" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/" className="brand-style">
-          <i className="bi bi-activity"></i> FitnessTracker
+          🏋️‍♀️ Fitness Tracker
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
+          <Nav className="ms-auto align-items-center">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
+
             {isLoggedIn ? (
               <>
                 <Nav.Link as={Link} to="/workout">Workouts</Nav.Link>
                 <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <Button variant="outline-light" size="sm" onClick={handleLogout} className="ms-3">
+                  Logout
+                </Button>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/register">Register</Nav.Link>
                 <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                <Button as={Link} to="/register" size="sm" className="ms-3 register-btn">
+                  Sign Up
+                </Button>
               </>
             )}
           </Nav>

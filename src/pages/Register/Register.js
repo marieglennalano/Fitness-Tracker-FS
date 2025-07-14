@@ -84,7 +84,7 @@ export default function Register() {
           title: 'Error!',
           text: 'Server error. Please try again later.',
           icon: 'error',
-          confirmButtonColor: '#FF69B4',
+          confirmButtonColor: '#69ffebff',
         });
       });
   };
