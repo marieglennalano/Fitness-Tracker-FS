@@ -1,75 +1,92 @@
-/* General layout for the login form container */
+/* Layout for full screen */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: white;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffe4ec, #ffffff);
   padding: 20px;
 }
 
-/* Style for the login form */
+/* Login card form */
 .login-form {
-  background-color: white;
-  padding: 30px;
-  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 40px 30px;
   max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease-in-out;
 }
 
-/* Login title styling */
+/* Title with icon */
 .login-title {
+  font-size: 28px;
+  color: #FF69B4;
   text-align: center;
-  font-size: 24px;
-  color: #FF69B4; /* Pink color */
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
-/* Error message styling */
+.login-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Error alert */
 .login-error {
-  color: red;
+  color: #d8000c;
+  background-color: #ffd2d2;
+  padding: 8px;
+  border-radius: 5px;
   font-size: 14px;
   margin-bottom: 15px;
   text-align: center;
 }
 
-/* Style for the input groups (email and password fields) */
+/* Input label and field group */
 .login-group {
   margin-bottom: 20px;
 }
 
 .login-group label {
   font-size: 14px;
+  margin-bottom: 6px;
   color: #333;
-  margin-bottom: 8px;
   display: block;
 }
 
-/* Input field styling */
 .login-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #333;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
 }
 
-/* Button styling */
+.login-input:focus {
+  border-color: #FF69B4;
+  outline: none;
+}
+
+/* Submit button */
 .login-btn {
-  background-color: #FF69B4; /* Pink color */
+  background-color: #FF69B4;
   color: white;
-  font-size: 16px;
+  padding: 12px;
   border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   width: 100%;
-  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .login-btn:hover {
-  background-color: #e65b9d; /* Slightly darker pink on hover */
+  background-color: #e55aa2;
 }
 
 .login-btn:disabled {
@@ -77,16 +94,34 @@
   cursor: not-allowed;
 }
 
-/* Responsive Design: Adjust layout for smaller screens */
-@media (max-width: 600px) {
+/* Register link */
+.login-register-link {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+  color: #555;
+}
+
+.login-register-link a {
+  color: #FF69B4;
+  text-decoration: none;
+}
+
+.login-register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
   .login-form {
-    padding: 20px;
-    width: 100%;
+    padding: 30px 20px;
   }
+
   .login-title {
-    font-size: 20px;
+    font-size: 22px;
   }
+
   .login-btn {
-    font-size: 14px;
+    font-size: 15px;
   }
 }

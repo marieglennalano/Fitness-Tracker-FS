@@ -1,58 +1,68 @@
-/* General background for the registration page */
 .register-bg {
-  background-color: white;
-  height: 100vh;
+  background: linear-gradient(135deg, #ffe4ec, #ffffff);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
-/* Form styling */
 .register-form {
-  width: 100%;
-  max-width: 400px;
   background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+  transition: all 0.3s ease-in-out;
 }
 
-/* Heading styling */
 .register-title {
-  font-size: 24px;
-  color: #FF69B4; /* Pink color */
+  font-size: 28px;
+  color: #FF69B4;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
-/* Label styling */
+.register-subtitle {
+  color: #777;
+  font-size: 14px;
+}
+
 .register-label {
   font-size: 14px;
+  font-weight: 500;
   color: #333;
 }
 
-/* Input field styling */
 .register-input {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
   width: 100%;
-  font-size: 16px;
-  color: #333;
+  transition: border-color 0.2s ease;
 }
 
-/* Button styling */
+.register-input:focus {
+  border-color: #FF69B4;
+  outline: none;
+}
+
 .register-btn {
-  background-color: #FF69B4; /* Pink */
+  background-color: #FF69B4;
   color: white;
   font-size: 16px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px;
+  border-radius: 8px;
   width: 100%;
-  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #e55aa2;
 }
 
 .register-btn:disabled {
@@ -60,13 +70,26 @@
   cursor: not-allowed;
 }
 
-/* Responsive design for smaller devices */
-@media (max-width: 600px) {
+.text-pink {
+  color: #FF69B4;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.text-pink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
   .register-form {
-    padding: 20px;
-    max-width: 100%;
+    padding: 30px 20px;
   }
+
   .register-title {
-    font-size: 20px;
+    font-size: 24px;
+  }
+
+  .register-btn {
+    font-size: 15px;
   }
 }

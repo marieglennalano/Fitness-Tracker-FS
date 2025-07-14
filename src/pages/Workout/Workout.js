@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Modal, Form } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  Form
+} from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import './Workout.css';
 
 export default function Workout() {
   const [workouts, setWorkouts] = useState([]);
@@ -13,7 +22,7 @@ export default function Workout() {
   const [editWorkout, setEditWorkout] = useState(null);
   const [error, setError] = useState('');
 
-  const token = localStorage.getItem('token'); // Get the token to check if the user is logged in
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchWorkouts();
@@ -45,10 +54,10 @@ export default function Workout() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleAddWorkout = async (e) => {
@@ -75,17 +84,13 @@ export default function Workout() {
 
   const handleUpdateWorkoutStatus = async (workoutId) => {
     try {
-      const response = await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/completeWorkoutStatus/${workoutId}`, {
+      await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/completeWorkoutStatus/${workoutId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-      const updatedWorkout = await response.json();
-
-      // Refresh the workouts list from the backend to reflect changes
       fetchWorkouts();
-
       Swal.fire('Success', 'Workout completed!', 'success');
     } catch (error) {
       console.error('Error updating workout status:', error);
@@ -107,7 +112,7 @@ export default function Workout() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/updateWorkout/${editWorkout._id}`, {
+      await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/updateWorkout/${editWorkout._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -115,11 +120,7 @@ export default function Workout() {
         },
         body: JSON.stringify(formData),
       });
-      const updatedWorkout = await response.json();
-
-      // Refresh the workouts list from the backend to reflect changes
       fetchWorkouts();
-
       setShow(false);
       Swal.fire('Success', 'Workout updated!', 'success');
     } catch (error) {
@@ -131,14 +132,13 @@ export default function Workout() {
 
   const handleDeleteWorkout = async (workoutId) => {
     try {
-      const response = await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/deleteWorkout/${workoutId}`, {
+      await fetch(`https://fitness-tracker-api-enez.onrender.com/workouts/deleteWorkout/${workoutId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-      const deletedWorkout = await response.json();
-      setWorkouts(workouts.filter(workout => workout._id !== workoutId));
+      setWorkouts(prev => prev.filter(workout => workout._id !== workoutId));
       Swal.fire('Success', 'Workout deleted!', 'success');
     } catch (error) {
       console.error('Error deleting workout:', error);
@@ -160,42 +160,68 @@ export default function Workout() {
   const handleClose = () => setShow(false);
 
   return (
-    <div>
-      {token && (  // Conditionally render the "Add Workout" button only if the user is logged in
-        <Button variant="primary" onClick={handleShow}>Add Workout</Button>
-      )}
+    <Container className="workout-page mt-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="section-title">Your Workouts</h2>
+        {token && (
+          <Button variant="primary" id="addWorkout" onClick={handleShow}>
+            + Add Workout
+          </Button>
+        )}
+      </div>
 
-      <div className="workouts-list">
+      <Row>
         {workouts.length > 0 ? (
           workouts.map((workout) => (
-            <Card key={workout._id} style={{ width: '18rem', margin: '10px', backgroundColor: 'white', borderColor: '#FF69B4' }}>
-              <Card.Body>
-                <Card.Title>{workout.name}</Card.Title>
-                <Card.Text>
-                  Duration: {workout.duration} minutes
-                  <br />
-                  Status: {workout.status}
-                </Card.Text>
+            <Col key={workout._id} xs={12} sm={6} md={4} className="mb-4">
+              <Card className="workout-card">
+                <Card.Body>
+                  <Card.Title>{workout.name}</Card.Title>
+                  <Card.Text>
+                    Duration: {workout.duration} minutes<br />
+                    Status: {workout.status}
+                  </Card.Text>
 
-                {token && ( // Conditionally render the Edit and Delete buttons only if the user is logged in
-                  <>
-                    <Button variant="primary" onClick={() => handleEditWorkout(workout)}>Edit</Button>
-                    <Button variant="danger" onClick={() => handleDeleteWorkout(workout._id)}>Delete</Button>
-                  </>
-                )}
+                  {token && (
+                    <>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleEditWorkout(workout)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleDeleteWorkout(workout._id)}
+                      >
+                        Delete
+                      </Button>
+                    </>
+                  )}
 
-                {workout.status !== 'completed' && token && (  // Show "Complete" button only if logged in and workout is not completed
-                  <Button variant="success" onClick={() => handleUpdateWorkoutStatus(workout._id)}>Complete</Button>
-                )}
-              </Card.Body>
-            </Card>
+                  {workout.status !== 'completed' && token && (
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={() => handleUpdateWorkoutStatus(workout._id)}
+                    >
+                      Complete
+                    </Button>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         ) : (
           <p>No workouts found. Login to View Workouts!</p>
         )}
-      </div>
+      </Row>
 
-      {/* Add/Edit Workout Modal */}
+      {/* Add/Edit Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{editWorkout ? 'Edit Workout' : 'Add Workout'}</Modal.Title>
@@ -239,6 +265,6 @@ export default function Workout() {
           </Form>
         </Modal.Body>
       </Modal>
-    </div>
+    </Container>
   );
 }

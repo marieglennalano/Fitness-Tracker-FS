@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Swal from 'sweetalert2';
 import { Form, Button } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import './Register.css';
 export default function Register() {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const user = context && context.user ? context.user : null;
+  const user = context?.user ?? null;
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -17,7 +17,6 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [isActive, setIsActive] = useState(false);
 
-  // Form validation
   useEffect(() => {
     if (
       firstName !== '' &&
@@ -50,8 +49,6 @@ export default function Register() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('Register response:', data);
-
         if (data.message === 'Registered successfully') {
           setFirstName('');
           setLastName('');
@@ -59,76 +56,35 @@ export default function Register() {
           setMobileNo('');
           setPassword('');
 
-          // Show SweetAlert success and navigate
           Swal.fire({
             title: 'Success!',
             text: 'Registration successful!',
             icon: 'success',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#FF69B4', // Pink button
-            backdrop: true,
-            showClass: {
-              popup: 'swal2-show swal2-animate-pop'
-            },
-            hideClass: {
-              popup: 'swal2-hide swal2-animate-pop'
-            }
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate('/'); // Redirect to the home page
-            }
-          });
+            confirmButtonColor: '#FF69B4',
+          }).then(() => navigate('/login'));
         } else if (data.message === 'User already exists') {
-          // Show SweetAlert error if user already exists
           Swal.fire({
             title: 'Error!',
-            text: 'User with this email already exists. Please use a different email.',
+            text: 'User already exists. Try a different email.',
             icon: 'error',
-            confirmButtonText: 'OK',
             confirmButtonColor: '#FF69B4',
-            backdrop: true,
-            showClass: {
-              popup: 'swal2-show swal2-animate-pop'
-            },
-            hideClass: {
-              popup: 'swal2-hide swal2-animate-pop'
-            }
           });
         } else {
-          // Show generic error if any other issue arises
           Swal.fire({
             title: 'Error!',
             text: data.message || 'Registration failed',
             icon: 'error',
-            confirmButtonText: 'OK',
             confirmButtonColor: '#FF69B4',
-            backdrop: true,
-            showClass: {
-              popup: 'swal2-show swal2-animate-pop'
-            },
-            hideClass: {
-              popup: 'swal2-hide swal2-animate-pop'
-            }
           });
         }
       })
       .catch((err) => {
         console.error('Error:', err);
-
-        // Show SweetAlert error if there is a server issue
         Swal.fire({
           title: 'Error!',
           text: 'Server error. Please try again later.',
           icon: 'error',
-          confirmButtonText: 'OK',
           confirmButtonColor: '#FF69B4',
-          backdrop: true,
-          showClass: {
-            popup: 'swal2-show swal2-animate-pop'
-          },
-          hideClass: {
-            popup: 'swal2-hide swal2-animate-pop'
-          }
         });
       });
   };
@@ -136,14 +92,14 @@ export default function Register() {
   return (
     <div className="register-bg">
       <Form onSubmit={registerUser} className="register-form">
-        <h2 className="register-title">Register</h2>
+        <h2 className="register-title">Create Account</h2>
+        <p className="register-subtitle text-center mb-4">Join Fitness Tracker today!</p>
 
         <Form.Group className="mb-3">
           <Form.Label className="register-label">First Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter First Name"
-            required
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             className="register-input"
@@ -155,7 +111,6 @@ export default function Register() {
           <Form.Control
             type="text"
             placeholder="Enter Last Name"
-            required
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="register-input"
@@ -167,7 +122,6 @@ export default function Register() {
           <Form.Control
             type="email"
             placeholder="Enter Email"
-            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="register-input"
@@ -179,7 +133,6 @@ export default function Register() {
           <Form.Control
             type="text"
             placeholder="Enter 11-digit number"
-            required
             value={mobileNo}
             onChange={(e) => setMobileNo(e.target.value)}
             className="register-input"
@@ -191,22 +144,24 @@ export default function Register() {
           <Form.Control
             type="password"
             placeholder="Enter Password"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="register-input"
           />
         </Form.Group>
 
-        <div style={{ textAlign: 'center' }}>
-          <Button
-            type="submit"
-            id="submitBtn"
-            disabled={!isActive}
-            className="register-btn"
-          >
-            Submit
-          </Button>
+        <Button
+          type="submit"
+          className="register-btn"
+          disabled={!isActive}
+        >
+          Register
+        </Button>
+
+        <div className="mt-3 text-center">
+          <small>
+            Already have an account? <Link to="/login" className="text-pink">Login</Link>
+          </small>
         </div>
       </Form>
     </div>
