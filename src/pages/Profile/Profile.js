@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import './Profile.css';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer
 } from 'recharts';
+import CountUp from 'react-countup';
+import './Profile.css';
+import defaultProfileImage from '../../images/me.png';
+
 
 export default function Profile() {
   const [profile, setProfile] = useState({
@@ -71,7 +74,7 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch('https://fitness-tracker-api-enez.onrender.com/users/update-profile', {
+      await fetch('https://fitness-tracker-api-enez.onrender.com/users/update-profile', {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -80,7 +83,6 @@ export default function Profile() {
         body: JSON.stringify(formData)
       });
 
-      const updated = await res.json();
       setProfile(prev => ({ ...prev, ...formData }));
       setEditMode(false);
       Swal.fire('Updated', 'Profile updated successfully!', 'success');
@@ -101,22 +103,57 @@ export default function Profile() {
 
   return (
     <Container className="profile-page mt-5">
-      <Row className="justify-content-center">
+      <Row className="gy-4">
+        
+        {/* Left Column - Stats */}
+        <Col md={6}>
+          <Card className="stats-card p-4">
+            <div className="text-center">
+              <h5>🏋️‍♀️ Workout Stats</h5>
+              <p>Total Workouts: <strong><CountUp end={workoutStats.total} duration={1.5} /></strong></p>
+              <p>Completed: <strong><CountUp end={workoutStats.completed} duration={1.5} /></strong></p>
+              <p>Pending: <strong><CountUp end={pending} duration={1.5} /></strong></p>
+            </div>
+
+            <div className="progress-chart mt-4 text-center">
+              <h5>📊 Workout Progress</h5>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                    isAnimationActive={true}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
+        </Col>
+
+        {/* Right Column - Profile Info */}
         <Col md={6}>
           <Card className="profile-card p-4">
-            <div className="text-center mb-4">
-              <img
-                src={formData.profileImage || 'https://via.placeholder.com/120'}
-                alt="Profile"
-                className="profile-img"
-              />
+            <img
+              src={formData.profileImage || defaultProfileImage}
+              alt="Profile"
+              className="profile-img"
+            />
               {editMode && (
                 <Form.Group controlId="formFile" className="mt-2">
                   <Form.Control type="file" accept="image/*" onChange={handleImageUpload} />
                 </Form.Group>
               )}
-            </div>
-
             {editMode ? (
               <>
                 <Form.Group className="mb-3">
@@ -149,36 +186,6 @@ export default function Profile() {
                 </div>
               </>
             )}
-
-            <div className="workout-stats mt-4 text-center">
-              <h5>🏋️‍♀️ Workout Stats</h5>
-              <p>Total Workouts: <strong>{workoutStats.total}</strong></p>
-              <p>Completed: <strong>{workoutStats.completed}</strong></p>
-              <p>Pending: <strong>{pending}</strong></p>
-            </div>
-
-            <div className="progress-chart mt-4 text-center">
-              <h5>📊 Workout Progress</h5>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={chartData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={90}
-                    fill="#8884d8"
-                    label
-                  >
-                    {chartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
           </Card>
         </Col>
       </Row>

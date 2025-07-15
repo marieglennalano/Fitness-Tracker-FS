@@ -1,14 +1,17 @@
 .profile-page {
   min-height: 100vh;
+  padding: 20px 10px;
 }
 
-.profile-card {
+.profile-card,
+.workout-section-card {
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border-radius: 15px;
   background-color: #fff;
 }
 
+/* Responsive Profile Image */
 .profile-img {
   width: 120px;
   height: 120px;
@@ -24,11 +27,36 @@
   margin-top: 1.5rem;
 }
 
-.progress-chart {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+@media (max-width: 768px) {
+  .profile-card,
+  .workout-section-card {
+    margin-bottom: 2rem;
+  }
+
+  .profile-page {
+    padding: 10px;
+  }
 }
 
+.profile-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #0d6efd;
+  display: block;
+  margin: 0 auto;
+  animation: fadeScale 0.8s ease-in-out;
+}
+
+@keyframes fadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
