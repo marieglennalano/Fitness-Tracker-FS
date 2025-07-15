@@ -26,7 +26,7 @@ A modern full-stack **Fitness Tracker** app that helps users log their workouts,
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React + Vite
+- React
 - React Bootstrap
 - React Router
 - Recharts (for charts)
